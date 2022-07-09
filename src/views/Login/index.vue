@@ -58,7 +58,9 @@ export default {
           const res = await login(this.loginForm)
           console.log(res)
           // todo token存入vuex 写进localStorerage
+
           if (res.data.meta.status === 200) {
+            this.$store.commit('setUser', res.data.data.token)
             this.$router.push('/home')
           } else {
             this.$message.error('用户名或密码有误')

@@ -28,7 +28,9 @@
 import { login } from '@/api/user'
 export default {
   name: 'Login',
-  created () { },
+  created () {
+
+  },
   data () {
     return {
       loginForm: {
@@ -60,8 +62,9 @@ export default {
           // todo token存入vuex 写进localStorerage
 
           if (res.data.meta.status === 200) {
-            this.$store.commit('setUser', res.data.data.token)
+            this.$store.commit('user/setUser', res.data.data.token)
             this.$router.push('/home')
+            this.$message.success('登录成功')
           } else {
             this.$message.error('用户名或密码有误')
           }

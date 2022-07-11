@@ -1,10 +1,13 @@
 <template>
   <el-container class="container">
+    <!-- 头部 -->
     <el-header
       ><h2>后台管理系统</h2>
       <el-button type="warning" @click="logout">退出</el-button></el-header
     >
+    <!-- 头部 -->
     <el-container>
+      <!-- 侧边导航栏 -->
       <el-aside :width="isCollapse ? '64px' : '200px'">
         <el-menu
           class="el-menu-vertical-demo"
@@ -14,87 +17,76 @@
           :collapse-transition="false"
           default-active="1-1"
           unique-opened
+          router
         >
+          <!-- 展开折叠图标 -->
           <div @click="isCollapse = !isCollapse" class="closeOrOpen">
             <i :class="isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i>
           </div>
-          <el-submenu index="1">
+          <!-- 展开折叠图标 -->
+          <!-- 导航栏 -->
+          <el-submenu
+            :index="item.order.toString()"
+            v-for="item in menuList"
+            :key="item.id"
+          >
             <template slot="title">
-              <i class="el-icon-user-solid"></i>
-              <span slot="title">用户管理</span>
+              <i :class="iconList[item.order - 1]"></i>
+              <span slot="title">{{ item.authName }}</span>
             </template>
-            <el-menu-item index="1-1"
-              ><i class="el-icon-s-help"></i> 用户列表</el-menu-item
+            <el-menu-item
+              @click="itemClick(item.authName, item1.authName)"
+              :index="'/home' + '/' + item1.path"
+              v-for="item1 in item.children"
+              :key="item1.id"
+              ><i class="el-icon-s-help"></i> {{ item1.authName }}</el-menu-item
             >
           </el-submenu>
-          <el-submenu index="2">
-            <template slot="title">
-              <i :class="isCollapse ? 'el-icon-lock' : 'el-icon-unlock'"></i>
-              <span slot="title">权限管理</span>
-            </template>
-            <el-menu-item index="2-1"
-              ><i class="el-icon-s-help"></i>角色列表</el-menu-item
-            >
-            <el-menu-item index="2-2"
-              ><i class="el-icon-s-help"></i>权限列表</el-menu-item
-            >
-          </el-submenu>
-          <el-submenu index="3">
-            <template slot="title">
-              <i class="el-icon-s-shop"></i>
-              <span slot="title">商品管理</span>
-            </template>
-            <el-menu-item index="3-1"
-              ><i class="el-icon-s-help"></i>商品列表</el-menu-item
-            >
-            <el-menu-item index="3-1"
-              ><i class="el-icon-s-help"></i>分类参数</el-menu-item
-            >
-            <el-menu-item index="3-1"
-              ><i class="el-icon-s-help"></i>商品分类</el-menu-item
-            >
-          </el-submenu>
-          <el-submenu index="4">
-            <template slot="title">
-              <i class="el-icon-s-order"></i>
-              <span slot="title">订单管理</span>
-            </template>
-            <el-menu-item index="4-1"
-              ><i class="el-icon-s-help"></i>订单列表</el-menu-item
-            >
-          </el-submenu>
-          <el-submenu index="5">
-            <template slot="title">
-              <i class="el-icon-data-line"></i>
-              <span slot="title">数据统计</span>
-            </template>
-            <el-menu-item index="5-1"
-              ><i class="el-icon-s-help"></i>数据报表</el-menu-item
-            >
-          </el-submenu>
+
+          <!-- 导航栏 -->
         </el-menu>
       </el-aside>
-      <el-main>Main</el-main>
+      <!-- 侧边导航栏 -->
+      <!-- 主体区域 -->
+      <el-main>
+        <router-view></router-view>
+      </el-main>
+      <!-- 主体区域 -->
     </el-container>
   </el-container>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'Home',
-  created () { },
+  created () {
+    this.$store.dispatch('authority/getMenuList')
+    this.routeList = this.$router.options.routes[2].children
+  },
   data () {
     return {
-      isCollapse: false
+      // 控制侧边导航栏的折叠与展开true为展开
+      isCollapse: false,
+      iconList: ['el-icon-user-solid', 'el-icon-lock', 'el-icon-s-goods', 'el-icon-s-order', 'el-icon-data-line'],
+      routeList: {},
+      currentList: []
     }
   },
   methods: {
+    // 退出登录
     logout () {
-      this.$store.commit('delUser')
+      this.$store.commit('user/delUser')
       this.$router.push('/login')
+    },
+    itemClick (item, item1) {
+      this.currentList = [item, item1]
+      this.$store.commit('nav/setNav', this.currentList)
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters(['menuList'])
+  },
   watch: {},
   filters: {},
   components: {}
@@ -104,6 +96,7 @@ export default {
 <style scoped lang='less'>
 .container {
   height: 100vh;
+  // 头部布局
   .el-header {
     background-color: #8785a2;
     display: flex;
@@ -114,6 +107,7 @@ export default {
       color: #f6f6f6;
     }
   }
+  // 侧边栏
   .el-aside {
     background-color: #8785a2;
     .el-menu {
@@ -131,18 +125,18 @@ export default {
       i {
         color: #f6f6f6;
       }
-      /deep/.is-active {
+      /deep/.is-active,
+      .is-active > i {
         color: #f38181;
-        .el-icon-s-help {
-          color: #f38181 !important;
-        }
       }
     }
   }
+  // 主体区域
   .el-main {
     background-color: #f6f6f6;
   }
 }
+// 侧边导航栏设置
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;

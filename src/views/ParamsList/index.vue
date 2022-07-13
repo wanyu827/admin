@@ -1,5 +1,5 @@
 <template>
-  <div><BreadCrumb></BreadCrumb></div>
+  <div></div>
 </template>
 
 <script>

@@ -15,7 +15,7 @@
           background-color="#8785a2"
           text-color="#f6f6f6"
           :collapse-transition="false"
-          default-active="1-1"
+          default-active="/home/users"
           unique-opened
           router
         >
@@ -49,7 +49,9 @@
       <!-- 侧边导航栏 -->
       <!-- 主体区域 -->
       <el-main>
-        <router-view></router-view>
+        <BreadCrumb v-if="$route.path !== '/home'"></BreadCrumb>
+        <h2 v-else>welcome</h2>
+        <router-view class="main"></router-view>
       </el-main>
       <!-- 主体区域 -->
     </el-container>
@@ -66,6 +68,7 @@ export default {
   },
   data () {
     return {
+      isBreadCrumbShow: false,
       // 控制侧边导航栏的折叠与展开true为展开
       isCollapse: false,
       iconList: ['el-icon-user-solid', 'el-icon-lock', 'el-icon-s-goods', 'el-icon-s-order', 'el-icon-data-line'],
@@ -134,11 +137,22 @@ export default {
   // 主体区域
   .el-main {
     background-color: #f6f6f6;
+    padding: 20px;
   }
 }
 // 侧边导航栏设置
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
+}
+.el-breadcrumb {
+  margin-bottom: 15px;
+}
+.main {
+  width: 100%;
+  background-color: #fff;
+  // height: 100%;
+  padding: 20px;
+  border-radius: 10px;
 }
 </style>

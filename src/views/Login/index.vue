@@ -33,9 +33,10 @@ export default {
   },
   data () {
     return {
+
       loginForm: {
-        username: '',
-        password: ''
+        username: 'admin',
+        password: '123456'
       },
       rules: {
         username: [
@@ -58,7 +59,7 @@ export default {
         await this.$refs.loginFormRef.validate()
         try {
           const res = await login(this.loginForm)
-          console.log(res)
+          console.log('res', res)
           // todo token存入vuex 写进localStorerage
 
           if (res.data.meta.status === 200) {

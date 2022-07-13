@@ -11,13 +11,19 @@
 
 <script>
 export default {
-  created () { },
-  data () {
-    return {}
+
+  created () {
   },
-  methods: {},
+  data () {
+    return {
+
+    }
+  },
+  methods: {
+  },
   computed: {},
-  watch: {},
+  watch: {
+  },
   filters: {},
   components: {}
 }

@@ -7,7 +7,9 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './permission'
 import BreadCrumb from '@/components/BreadCrumb.vue'
+import Pagination from '@/components/Pagination.vue'
 Vue.component('BreadCrumb', BreadCrumb)
+Vue.component('Pagination', Pagination)
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 new Vue({

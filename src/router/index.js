@@ -17,6 +17,7 @@ const routes = [
   {
     path: '/home',
     component: Home,
+
     children: [
       { path: 'users', component: UserList, name: '用户列表' },
       { path: 'roles', component: RoleList, name: '角色列表' },

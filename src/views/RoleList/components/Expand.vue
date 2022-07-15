@@ -58,10 +58,9 @@ export default {
     }
   },
   methods: {
+    // 删除角色权限
     removeAuth (id, id1, id2) {
       const rid = this.$store.state.role.roles[this.index].id
-      console.log(id, id1, id2)
-
       this.$confirm('此操作将永久删除该用户的权限, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -71,6 +70,7 @@ export default {
           const res = await delRoleAuth(rid, id)
           // this.$store.dispatch('role/getRoleList')
           if (res.data.meta.status === 200) {
+            // 删除vuex中的指定数据 并更新视图
             this.$store.state.role.roles[this.index].children.forEach((item, index) => {
               if (item.id === id1) {
                 item.children.forEach((item1, index1) => {

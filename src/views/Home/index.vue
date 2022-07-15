@@ -15,7 +15,7 @@
           background-color="#8785a2"
           text-color="#f6f6f6"
           :collapse-transition="false"
-          default-active="/home/users"
+          :default-active="$route.path"
           unique-opened
           router
         >
@@ -138,6 +138,7 @@ export default {
   .el-main {
     background-color: #f6f6f6;
     padding: 20px;
+    height: calc(100vh - 60px);
   }
 }
 // 侧边导航栏设置

@@ -4,6 +4,7 @@ import VuexPersistence from 'vuex-persist'
 import user from './modules/user'
 import authority from './modules/authority'
 import nav from './modules/nav'
+import role from './modules/role'
 import getters from './getters'
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage
@@ -15,7 +16,8 @@ export default new Vuex.Store({
   modules: {
     user,
     authority,
-    nav
+    nav,
+    role
   },
   plugins: [vuexLocal.plugin]
 })

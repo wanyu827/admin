@@ -11,10 +11,7 @@
     <!-- 表格 -->
     <UserTable></UserTable>
     <!-- 分页 -->
-    <Pagination
-      @get-pagenum="pagenum = $event"
-      @get-pagesize="pagesize = $event"
-    ></Pagination>
+    <Pagination></Pagination>
     <!-- 添加用户弹出 -->
     <el-dialog title="添加用户" :visible.sync="dialogFormVisible">
       <el-form :model="formAddUser" :rules="rules" label-width="80px">
@@ -68,11 +65,12 @@
 <script>
 import { validMobile, validEmail } from '@/utils/validate'
 import UserTable from './components/UserTable.vue'
+
 export default {
   name: 'UserList',
   created () {
     // 获取用户数据列表
-    this.$store.dispatch('user/getUserInfoList', { pagenum: this.pagenum, pagesize: this.pagesize })
+    this.$store.dispatch('user/getUserInfoList', { pagenum: this.$store.state.user.pagenum, pagesize: this.$store.state.user.pagesize })
   },
   data () {
     // 手机格式校验
@@ -113,30 +111,32 @@ export default {
           { required: true, message: '请输入手机号', trigger: 'blur' },
           { validator: validateMobile, trigger: 'blur' }
         ]
-      },
-      pagenum: 1,
-      pagesize: 5
+      }
     }
   },
   methods: {
     // 搜索
     search () {
-      console.log(11)
+      console.log(this.input)
+      const pagenum = this.$store.state.user.pagenum
+      const pagesize = this.$store.state.user.pagesize
+      this.$store.dispatch('user/getUserInfoList', { query: this.input, pagenum, pagesize })
     },
     // 添加用户确认按钮点击事件
     addUser () {
+      this.$store.dispatch('user/addUser', this.formAddUser)
       this.dialogFormVisible = false
     }
 
   },
   computed: {},
   watch: {
-    pagenum () {
-      this.$store.dispatch('user/getUserInfoList', { pagenum: this.pagenum, pagesize: this.pagesize })
-    },
-    pagesize () {
-      this.$store.dispatch('user/getUserInfoList', { pagenum: this.pagenum, pagesize: this.pagesize })
-    }
+    /*   pagenum () {
+        this.$store.dispatch('user/getUserInfoList', { pagenum: this.pagenum, pagesize: this.pagesize })
+      },
+      pagesize () {
+        this.$store.dispatch('user/getUserInfoList', { pagenum: this.pagenum, pagesize: this.pagesize })
+      } */
   },
   filters: {},
   components: { UserTable }

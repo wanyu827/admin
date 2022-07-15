@@ -24,13 +24,16 @@ request.interceptors.request.use(function (config) {
 request.interceptors.response.use(function (response) {
   // 对响应数据做点什么
   // console.log('响应·拦截器', response.data)
+  // 如果token过期就重新登录
+  console.log('1', response)
+  if (response.data.meta.msg === '无效token') {
+    store.commit('user/delUser')
+    router.push('/login')
+  }
   return response
 }, function (error) {
   // 对响应错误做点什么
-  if (error.response.data.meta.status === 400 || error.response.data.meta.status === 401) {
-    store.commit('delUser')
-    router.push('/login')
-  }
+
   return Promise.reject(error)
 })
 export default request

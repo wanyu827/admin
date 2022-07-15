@@ -3,11 +3,11 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage1"
       :page-sizes="[1, 2, 5, 10]"
-      :page-size="5"
+      :page-size="$store.state.user.pagesize"
+      :current-page="$store.state.user.pagenum"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="this.$store.getters.total"
+      :total="this.$store.getters.total || 0"
     >
     </el-pagination>
   </div>
@@ -21,20 +21,19 @@ export default {
   },
   data () {
     return {
-      currentPage1: 1,
-      currentPage2: 5,
-      currentPage3: 5,
-      currentPage4: 4
+
     }
   },
   methods: {
     handleSizeChange (val) {
       console.log(`每页 ${val} 条`)
-      this.$emit('get-pagesize', val)
+      this.$store.state.user.pagesize = val
+      this.$store.dispatch('user/getUserInfoList', { pagenum: this.$store.state.user.pagenum, pagesize: this.$store.state.user.pagesize })
     },
     handleCurrentChange (val) {
       console.log(`当前页: ${val}`)
-      this.$emit('get-pagenum', val)
+      this.$store.state.user.pagenum = val
+      this.$store.dispatch('user/getUserInfoList', { pagenum: this.$store.state.user.pagenum, pagesize: this.$store.state.user.pagesize })
     }
   },
   computed: {},

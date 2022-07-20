@@ -3,11 +3,11 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :page-sizes="[1, 2, 5, 10]"
-      :page-size="$store.state.user.pagesize"
-      :current-page="$store.state.user.pagenum"
+      :page-sizes="pageSizes"
+      :page-size="pageSize"
+      :current-page="currentPage"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="this.$store.getters.total || 0"
+      :total="total || 0"
     >
     </el-pagination>
   </div>
@@ -15,6 +15,24 @@
 
 <script>
 export default {
+  props: {
+    pageSizes: {
+      type: Array,
+      required: true
+    },
+    pageSize: {
+      type: Number,
+      required: true
+    },
+    currentPage: {
+      type: Number,
+      required: true
+    },
+    total: {
+      type: Number,
+      required: true
+    }
+  },
   name: 'Pagination',
   created () {
 
@@ -27,13 +45,11 @@ export default {
   methods: {
     handleSizeChange (val) {
       console.log(`每页 ${val} 条`)
-      this.$store.state.user.pagesize = val
-      this.$store.dispatch('user/getUserInfoList', { pagenum: this.$store.state.user.pagenum, pagesize: this.$store.state.user.pagesize })
+      this.$emit('size-change', val)
     },
     handleCurrentChange (val) {
       console.log(`当前页: ${val}`)
-      this.$store.state.user.pagenum = val
-      this.$store.dispatch('user/getUserInfoList', { pagenum: this.$store.state.user.pagenum, pagesize: this.$store.state.user.pagesize })
+      this.$emit('current-change', val)
     }
   },
   computed: {},

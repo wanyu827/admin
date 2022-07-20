@@ -3,5 +3,7 @@ export default {
   menuList: state => state.authority.menuList,
   nav: state => state.nav.nav,
   total: state => state.user.total,
-  users: state => state.user.users
+  users: state => state.user.users,
+  goods: state => state.goods.goods,
+  goodsId: state => state.goods.goods_id
 }

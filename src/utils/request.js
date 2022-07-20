@@ -10,9 +10,7 @@ const request = axios.create({
 request.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
   if (store.getters.token) {
-    config.headers = {
-      Authorization: store.getters.token
-    }
+    config.headers.Authorization = store.getters.token
   }
   return config
 }, function (error) {
@@ -25,7 +23,7 @@ request.interceptors.response.use(function (response) {
   // 对响应数据做点什么
   // console.log('响应·拦截器', response.data)
   // 如果token过期就重新登录
-  console.log('1', response)
+  // console.log('1', response)
   if (response.data.meta.msg === '无效token') {
     store.commit('user/delUser')
     router.push('/login')

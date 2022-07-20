@@ -9,6 +9,8 @@ const ParamsList = () => import('@/views/ParamsList')
 const CateGory = () => import('@/views/CateGory')
 const OrderList = () => import('@/views/OrderList')
 const Reports = () => import('@/views/Reports')
+const AddGoods = () => import('@/views/GoodsList/components/AddGoods.vue')
+const EditGoods = () => import('@/views/GoodsList/components/EditGoods.vue')
 Vue.use(VueRouter)
 
 const routes = [
@@ -26,7 +28,9 @@ const routes = [
       { path: 'params', component: ParamsList, name: '分类参数' },
       { path: 'categories', component: CateGory, name: '商品分类' },
       { path: 'orders', component: OrderList, name: '订单列表' },
-      { path: 'reports', component: Reports, name: '数据报表' }
+      { path: 'reports', component: Reports, name: '数据报表' },
+      { path: 'goods/add', component: AddGoods, name: '添加商品' },
+      { path: 'goods/edit', component: EditGoods, name: '编辑商品' }
     ]
   }
 ]

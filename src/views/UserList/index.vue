@@ -11,7 +11,14 @@
     <!-- 表格 -->
     <UserTable></UserTable>
     <!-- 分页 -->
-    <Pagination></Pagination>
+    <Pagination
+      :page-sizes="[1, 2, 5, 10]"
+      :page-size="$store.state.user.pagesize"
+      :current-page="$store.state.user.pagenum"
+      :total="$store.getters.total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    ></Pagination>
     <!-- 添加用户弹出 -->
     <el-dialog title="添加用户" :visible.sync="dialogFormVisible">
       <el-form :model="formAddUser" :rules="rules" label-width="80px">
@@ -70,7 +77,7 @@ export default {
   name: 'UserList',
   created () {
     // 获取用户数据列表
-    this.$store.dispatch('user/getUserInfoList', { pagenum: this.$store.state.user.pagenum, pagesize: this.$store.state.user.pagesize })
+    this.getUserList()
   },
   data () {
     // 手机格式校验
@@ -117,26 +124,28 @@ export default {
   methods: {
     // 搜索
     search () {
-      console.log(this.input)
-      const pagenum = this.$store.state.user.pagenum
-      const pagesize = this.$store.state.user.pagesize
-      this.$store.dispatch('user/getUserInfoList', { query: this.input, pagenum, pagesize })
+      this.getUserList()
     },
     // 添加用户确认按钮点击事件
     addUser () {
       this.$store.dispatch('user/addUser', this.formAddUser)
       this.dialogFormVisible = false
-    }
+    },
 
+    handleSizeChange (val) {
+      this.$store.state.user.pagesize = val
+      this.getUserList()
+    },
+    handleCurrentChange (val) {
+      this.$store.state.user.pagenum = val
+      this.getUserList()
+    },
+    getUserList () {
+      this.$store.dispatch('user/getUserInfoList', { query: this.input, pagenum: this.$store.state.user.pagenum, pagesize: this.$store.state.user.pagesize })
+    }
   },
   computed: {},
   watch: {
-    /*   pagenum () {
-        this.$store.dispatch('user/getUserInfoList', { pagenum: this.pagenum, pagesize: this.pagesize })
-      },
-      pagesize () {
-        this.$store.dispatch('user/getUserInfoList', { pagenum: this.pagenum, pagesize: this.pagesize })
-      } */
   },
   filters: {},
   components: { UserTable }

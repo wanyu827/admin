@@ -8,10 +8,19 @@ import 'element-ui/lib/theme-chalk/index.css'
 import './permission'
 import BreadCrumb from '@/components/BreadCrumb.vue'
 import Pagination from '@/components/Pagination.vue'
+import dayjs from 'dayjs'
+import VueQuillEditor from 'vue-quill-editor'
+// require styles
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+Vue.use(VueQuillEditor /* { default global options } */)
 Vue.component('BreadCrumb', BreadCrumb)
 Vue.component('Pagination', Pagination)
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.prototype.dayjs = dayjs
 new Vue({
   router,
   store,

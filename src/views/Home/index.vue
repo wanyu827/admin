@@ -128,7 +128,7 @@ export default {
       i {
         color: #f6f6f6;
       }
-      /deep/.is-active,
+      :deep(.is-active),
       .is-active > i {
         color: #f38181;
       }

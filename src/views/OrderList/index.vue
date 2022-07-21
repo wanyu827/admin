@@ -55,7 +55,7 @@
       <el-table-column prop="create_time" label="下单时间">
         <template slot-scope="scope">
           <!-- 格式化时间 -->
-          {{ dayjs(scope.add_time).format("YYYY-MM-DD") }}
+          {{ scope.row.create_time | dateFormat }}
         </template>
       </el-table-column>
       <el-table-column label="操作">
@@ -79,12 +79,7 @@
       @current-change="handleCurrentChange"
     ></Pagination>
     <el-dialog title="修改收货地址" :visible.sync="showAddress">
-      <el-cascader
-        :options="cityOptions"
-        :value="city"
-        @change="changeProvince"
-      >
-      </el-cascader>
+      <el-cascader :options="cityOptions"> </el-cascader>
       <template #footer>
         <el-button @click="showAddress = false">取消</el-button>
         <el-button type="primary" @click="showAddress = false">确定</el-button>
@@ -97,8 +92,9 @@
 import cityOptions from '@/utils/city_data2017_element'
 import { getOrdersList } from '@/api/order'
 export default {
-  created () {
-    this.getOrdersList()
+  async created () {
+    await this.getOrdersList()
+    console.log(this.tableData)
   },
   data () {
     return {

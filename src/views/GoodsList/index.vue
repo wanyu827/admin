@@ -35,7 +35,7 @@
       <el-table-column label="创建时间" width="100">
         <template slot-scope="scope">
           <!-- 格式化时间 -->
-          {{ dayjs(scope.add_time).format("YYYY-MM-DD") }}
+          {{ scope.row.add_time | dateFormat }}
         </template>
       </el-table-column>
       <el-table-column label="操作" min-width="200">
@@ -134,7 +134,9 @@ export default {
   },
   computed: {},
   watch: {},
-  filters: {},
+  filters: {
+
+  },
   components: {}
 }
 </script>

@@ -24,6 +24,10 @@ Vue.component('Pagination', Pagination)
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.prototype.dayjs = dayjs
+
+Vue.filter('dateFormat', function (value, format = 'YYYY-MM-DD') {
+  return dayjs(value * 1000).format(format)
+})
 new Vue({
   router,
   store,

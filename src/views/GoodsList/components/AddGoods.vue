@@ -182,7 +182,7 @@ export default {
   methods: {
     // 级联选择器选择变化触发
     handleChange (value) {
-      console.log(this.addGoodsForm.goods_cat.length)
+      // console.log(this.addGoodsForm.goods_cat.length)
       if (this.addGoodsForm.goods_cat.length !== 3) {
         this.addGoodsForm.goods_cat = []
         return false

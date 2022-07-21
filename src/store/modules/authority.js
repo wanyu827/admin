@@ -16,7 +16,7 @@ const actions = {
   async getMenuList (context) {
     try {
       const res = await getLeftMenuList()
-      console.log(res)
+      // console.log(res)
       context.commit('setMenu', res.data.data)
     } catch (err) {
       console.log(err)
@@ -26,7 +26,7 @@ const actions = {
   async getAllList (context, type) {
     try {
       const res = await getAllList(type)
-      console.log(res)
+      // console.log(res)
       context.commit('setAllList', res.data.data)
     } catch (err) {
       console.log(err)

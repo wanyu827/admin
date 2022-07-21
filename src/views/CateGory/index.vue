@@ -1,5 +1,7 @@
 <template>
-  <div><BreadCrumb></BreadCrumb></div>
+  <div>
+    <el-button type="primary">添加分类</el-button>
+  </div>
 </template>
 
 <script>

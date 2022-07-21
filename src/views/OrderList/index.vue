@@ -52,7 +52,12 @@
         </template>
       </el-table-column>
       <el-table-column prop="is_send" label="是否发货"> </el-table-column>
-      <el-table-column prop="create_time" label="下单时间"> </el-table-column>
+      <el-table-column prop="create_time" label="下单时间">
+        <template slot-scope="scope">
+          <!-- 格式化时间 -->
+          {{ dayjs(scope.add_time).format("YYYY-MM-DD") }}
+        </template>
+      </el-table-column>
       <el-table-column label="操作">
         <template>
           <el-button

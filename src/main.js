@@ -14,7 +14,10 @@ import VueQuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
-
+// 全局引入echarts
+import echarts from 'echarts'
+// 需要挂载到Vue原型上
+Vue.prototype.$echarts = echarts
 Vue.use(VueQuillEditor /* { default global options } */)
 Vue.component('BreadCrumb', BreadCrumb)
 Vue.component('Pagination', Pagination)
